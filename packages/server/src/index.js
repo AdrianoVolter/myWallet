@@ -9,9 +9,16 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+let myAddress = null;
+
 function menu() {
   setTimeout(() => {
     console.clear();
+    if(myAddress) {
+      console.log(`You are logged as ${myAddress}`);
+    } else {
+      console.log("You are not logged in");
+    }
     console.log("1 - Create Wallet");
     console.log("2 - Recover Wallet");
     console.log("3 - Balance");
@@ -45,11 +52,26 @@ function menu() {
           menu();
       }
     });
-  }, 1500);
+  }, 1000);
+}
+
+function preMenu() {
+  rl.question("Press any key to continue...", () => {
+    menu();
+  });
 }
 
 function createWallet() {
-  WalletService.createWallet();
+  const myWallet = WalletService.createWallet();
+  myAddress = myWallet.address;
+
+  console.log(`Your new wallte:`);
+  console.log(myAddress);
+
+  // console.log("Wallet created");
+  // console.log("Address: ", myWallet.address);
+  // console.log("Private Key: ", myWallet.privateKey);
+  preMenu();
 }
 
 menu();
