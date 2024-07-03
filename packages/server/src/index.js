@@ -1,4 +1,5 @@
 const readline = require("readline");
+const WalletService = require("./WalletService");
 require("dotenv").config();
 
 const SYMBOL = process.env.SYMBOL;
@@ -20,7 +21,7 @@ function menu() {
     rl.question("Choose your option: ", (answer) => {
       switch (answer) {
         case "1":
-          console.log("Create Wallet");
+          createWallet();
           menu();
           break;
         case "2":
@@ -45,6 +46,10 @@ function menu() {
       }
     });
   }, 1500);
+}
+
+function createWallet() {
+  WalletService.createWallet();
 }
 
 menu();

@@ -14,6 +14,7 @@
     "packages/client"
   ],
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.1"
   }
 }
