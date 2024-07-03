@@ -9,6 +9,15 @@ function createWallet() {
     return myWallet;
 }
 
+function recoverWallet(pkOrMnemonic) {
+    myWallet = pkOrMnemonic.indexOf(' ') !== -1 
+        ?  ethers.Wallet.fromPhrase(pkOrMnemonic, provider)
+        : new ethers.Wallet(pkOrMnemonic, provider);
+    
+    return myWallet;
+}
+
 module.exports = {
-    createWallet
+    createWallet,
+    recoverWallet,
 }
