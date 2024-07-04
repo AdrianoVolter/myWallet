@@ -32,8 +32,38 @@ async function getBalance(address) {
   }
 }
 
+function addressIsValid(address) {
+  return ethers.isAddress(address);
+}
+
+async function buildTransaction(toWallet, amountInEth) { 
+  const amount = ethers.parseEther(amountInEth);
+  const tx = {
+    to: toWallet,
+    value: amount,
+  };
+  const feeDate = await provider.getFeeData();
+  const txFee = 21000n * feeDate.gasPrice;
+
+  const balance = await provider.getBalance(myWallet.address);
+  if (balance < amount + txFee) {
+    return {
+      success: false,
+      message: "Insufficient funds",
+    };
+  }
+  return tx;
+}
+
+async function sendTransaction(tx) {
+  return myWallet.sendTransaction(tx);
+}
+
 module.exports = {
   createWallet,
   recoverWallet,
   getBalance,
+  addressIsValid,
+  buildTransaction,
+  sendTransaction,
 };

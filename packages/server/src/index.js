@@ -38,7 +38,7 @@ function menu() {
           getBalance();
           break;
         case "4":
-          console.log("Send");
+          sendTx();
           break;
         case "5":
           console.log("Search Tx");
@@ -95,6 +95,43 @@ async function getBalance() {
     console.log("Error getting balance");
   }
   preMenu();
+}
+
+async function sendTx() {
+  console.clear();
+  if (!myAddress) {
+    console.log("You need to login first");
+    return preMenu();
+  }
+
+  console.log(`Your wallet: ${myAddress}`);
+  rl.question("To wallet: ", async (toWallet) => {
+    if (!WalletService.addressIsValid(toWallet)) {
+      console.log("Invalid address");
+      return preMenu();
+    }
+
+    rl.question(`Amount  (in ${SYMBOL}): `, async (amountInEth) => {
+      if (!amountInEth) {
+        console.log("Invalid amount");
+        return preMenu();
+      }
+      const tx = await WalletService.buildTransaction(toWallet, amountInEth);
+
+      if (!tx) {
+        console.log("Insufficient funds (amount + fee)");
+        return preMenu();
+      }
+
+      try {
+        const txSent = await WalletService.sendTransaction(tx);
+        console.log("Transaction sent: ");
+        console.log(txSent);
+      } catch (error) {
+        console.log("Error sending transaction");
+      }
+    });
+  });
 }
 
 menu();
