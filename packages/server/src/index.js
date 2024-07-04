@@ -105,7 +105,7 @@ async function sendTx() {
   }
 
   console.log(`Your wallet: ${myAddress}`);
-  rl.question("To wallet: ", async (toWallet) => {
+  rl.question("To wallet: ",  (toWallet) => {
     if (!WalletService.addressIsValid(toWallet)) {
       console.log("Invalid address");
       return preMenu();
@@ -113,7 +113,7 @@ async function sendTx() {
 
     rl.question(`Amount  (in ${SYMBOL}): `, async (amountInEth) => {
       if (!amountInEth) {
-        console.log("Invalid amount");
+        console.log("Invalid amount !");
         return preMenu();
       }
       const tx = await WalletService.buildTransaction(toWallet, amountInEth);
@@ -128,10 +128,14 @@ async function sendTx() {
         console.log("Transaction sent: ");
         console.log(txSent);
       } catch (error) {
-        console.log("Error sending transaction");
+        console.error(err)
+
       }
+
+      return preMenu();
     });
   });
+  
 }
 
 menu();

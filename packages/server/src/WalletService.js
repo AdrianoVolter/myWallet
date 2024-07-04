@@ -46,11 +46,8 @@ async function buildTransaction(toWallet, amountInEth) {
   const txFee = 21000n * feeDate.gasPrice;
 
   const balance = await provider.getBalance(myWallet.address);
-  if (balance < amount + txFee) {
-    return {
-      success: false,
-      message: "Insufficient funds",
-    };
+  if (balance < (amount + txFee)) {
+    return false;
   }
   return tx;
 }
