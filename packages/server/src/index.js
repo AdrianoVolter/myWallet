@@ -3,7 +3,7 @@ const WalletService = require("./WalletService");
 
 require("dotenv").config();
 
-const SYMBOL = process.env.SYMBOL 
+const SYMBOL = process.env.SYMBOL;
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -15,7 +15,7 @@ let myAddress = null;
 function menu() {
   setTimeout(() => {
     console.clear();
-    if(myAddress) {
+    if (myAddress) {
       console.log(`You are logged as ${myAddress}`);
     } else {
       console.log("You are not logged in");
@@ -79,27 +79,22 @@ function recoverWallet() {
     console.log("Wallet recovered");
     console.log(myAddress);
     preMenu();
-  })
+  });
 }
 
 async function getBalance() {
   console.clear();
-  if(!myAddress) {
+  if (!myAddress) {
     console.log("You need to login first");
     return preMenu();
   }
-  try{
-    const {balanceEther} = await WalletService.getBalance(myAddress);
-  console.log(`${SYMBOL} ${balanceEther}`);
+  try {
+    const { balanceEther } = await WalletService.getBalance(myAddress);
+    console.log(`${SYMBOL} ${balanceEther}`);
   } catch (error) {
     console.log("Error getting balance");
   }
-  
-  
-
   preMenu();
 }
-
-  
 
 menu();
