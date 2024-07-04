@@ -16,7 +16,22 @@ function recoverWallet(pkOrMnemonic) {
     return myWallet;
 }
 
+async function getBalance(address) {
+    try{
+         const balance = await provider.getBalance(address)
+    return {
+        balanceWei: balance,
+        balanceEther: ethers.formatEther(balance),
+    }
+    } catch (error) {
+        console.error("Error getting balance", error)
+        throw error;
+    }
+   
+}
+
 module.exports = {
     createWallet,
     recoverWallet,
+    getBalance,
 }

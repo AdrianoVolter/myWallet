@@ -22,7 +22,7 @@ function menu() {
     }
     console.log("1 - Create Wallet");
     console.log("2 - Recover Wallet");
-    console.log("3 - Balance");
+    console.log("3 - Balance ");
     console.log(`4 - Send ${SYMBOL}`);
     console.log("5 - Search Tx");
 
@@ -35,7 +35,7 @@ function menu() {
           recoverWallet();
           break;
         case "3":
-          console.log("Balance");
+          getBalance();
           break;
         case "4":
           console.log("Send");
@@ -81,6 +81,25 @@ function recoverWallet() {
     preMenu();
   })
 }
+
+async function getBalance() {
+  console.clear();
+  if(!myAddress) {
+    console.log("You need to login first");
+    return preMenu();
+  }
+  try{
+    const {balanceEther} = await WalletService.getBalance(myAddress);
+  console.log(`${SYMBOL} ${balanceEther}`);
+  } catch (error) {
+    console.log("Error getting balance");
+  }
+  
+  
+
+  preMenu();
+}
+
   
 
 menu();
