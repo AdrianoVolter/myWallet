@@ -1,7 +1,9 @@
 const readline = require("readline");
 const WalletService = require("./WalletService");
+
 require("dotenv").config();
-const SYMBOL = process.env.SYMBOL;
+
+const SYMBOL = process.env.SYMBOL 
 
 const rl = readline.createInterface({
   input: process.stdin,

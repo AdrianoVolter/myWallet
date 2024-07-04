@@ -6,9 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Adriano Jose Volter",
   "license": "ISC",
-  "description": "",
+  "description": "Carteira de criptomoedas para redes compatíveis com Ethereum/EVM . Via Cli ",
   "workspaces": [
     "packages/server",
     "packages/client"
