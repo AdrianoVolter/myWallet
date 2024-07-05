@@ -41,7 +41,7 @@ function menu() {
           sendTx();
           break;
         case "5":
-          console.log("Search Tx");
+          getTransaction();
           break;
         default:
           console.log("Wrong option");
@@ -105,7 +105,7 @@ async function sendTx() {
   }
 
   console.log(`Your wallet: ${myAddress}`);
-  rl.question("To wallet: ",  (toWallet) => {
+  rl.question("To wallet: ", (toWallet) => {
     if (!WalletService.addressIsValid(toWallet)) {
       console.log("Invalid address");
       return preMenu();
@@ -128,14 +128,35 @@ async function sendTx() {
         console.log("Transaction sent: ");
         console.log(txSent);
       } catch (error) {
-        console.error(err)
-
+        console.error(err);
       }
 
       return preMenu();
     });
   });
-  
+}
+
+async function getTransaction() {
+  console.clear();
+  // if (!myAddress) {
+  //   console.log("You need to login first");
+  //   return preMenu();
+  // }
+  console.log("Search Tx \n");
+  rl.question("Add the Hash of the transaction: ", async (txHash) => {
+    if (!txHash) {
+      console.log("Invalid hash");
+      return preMenu();
+    }
+    try {
+      const tx = await WalletService.getTransaction(txHash);
+      console.log("\nYour tx received: ");
+      console.log(tx);
+    } catch (error) {
+      console.error("Error searching tx", error);
+    }
+    preMenu();
+  });
 }
 
 menu();

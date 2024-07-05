@@ -36,7 +36,7 @@ function addressIsValid(address) {
   return ethers.isAddress(address);
 }
 
-async function buildTransaction(toWallet, amountInEth) { 
+async function buildTransaction(toWallet, amountInEth) {
   const amount = ethers.parseEther(amountInEth);
   const tx = {
     to: toWallet,
@@ -46,7 +46,7 @@ async function buildTransaction(toWallet, amountInEth) {
   const txFee = 21000n * feeDate.gasPrice;
 
   const balance = await provider.getBalance(myWallet.address);
-  if (balance < (amount + txFee)) {
+  if (balance < amount + txFee) {
     return false;
   }
   return tx;
@@ -56,6 +56,10 @@ async function sendTransaction(tx) {
   return myWallet.sendTransaction(tx);
 }
 
+async function getTransaction(txHash) {
+  return provider.getTransaction(txHash);
+}
+
 module.exports = {
   createWallet,
   recoverWallet,
@@ -63,4 +67,5 @@ module.exports = {
   addressIsValid,
   buildTransaction,
   sendTransaction,
+  getTransaction,
 };
